@@ -10,22 +10,18 @@ services:
       - mongo-data:/data/db
 
   server:
-    build:
-      context: ./server
+    image: ajitjivane001/mini-blog-server:latest
     restart: unless-stopped
     ports:
       - '5000:5000'
     environment:
       MONGO_URI: mongodb://mongo:27017/miniblog
-      CORS_ORIGIN: http://localhost:3000
+      CORS_ORIGIN: http://client
     depends_on:
       - mongo
 
   client:
-    build:
-      context: ./client
-      args:
-        VITE_API_BASE_URL: http://localhost:5000/api
+    image: ajitjivane001/mini-blog-client:latest
     restart: unless-stopped
     ports:
       - '3000:80'
